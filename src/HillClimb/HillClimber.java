@@ -1,5 +1,6 @@
 package HillClimb;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class HillClimber {
@@ -7,6 +8,7 @@ public class HillClimber {
 	Board board;
 	boolean climbing;
 	public static int correct;
+	
 	Random r = new Random();
 	long time;
 
@@ -16,13 +18,13 @@ public class HillClimber {
 		time = System.currentTimeMillis();
 		while (board.totalCollisions() != 0) {
 			for (int i = 0; i < 8; i++) {
-				if (climbHelper(i)) {
-					board.calculateSquareCollisions();
-				}
-
+				climbHelper(i);
+					board.calculateSquareCollisions();				
+				
 			}
-
-			if (System.currentTimeMillis() - time > 100)
+			// If it takes more than 5 milliseconds(Arbitrary), it's likely there isn't a
+			// solution to be found.
+			if (System.currentTimeMillis() - time > 5)
 				return;
 
 		}
@@ -33,19 +35,26 @@ public class HillClimber {
 
 	private boolean climbHelper(int column) {
 		int occ = -1;
+		boolean ret = false;
+		ArrayList<Integer> better = new ArrayList<Integer>();
 
 		for (int i = 0; i < 8; i++) {
 			if (board.board[i][column].isOccupied())
 				occ = i;
 		}
-		int m = r.nextInt(8);
-		if (board.board[m][column].getCollisions() <= board.board[occ][column]
-				.getCollisions()) {
-			switchQueen(column, occ, m);
-			return true;
-		}
-		return false;
 
+		for (int i = 0; i < 8; i++) {
+			if (board.board[i][column].getCollisions() <= board.board[occ][column]
+					.getCollisions()) {
+				ret = true;
+				better.add(i);
+			}
+		}
+		if (ret == true) {
+			int m = r.nextInt(better.size());
+			switchQueen(column, occ, better.get(m));
+		}
+		return ret;
 	}
 
 	private void switchQueen(int i1, int j1, int j2) {
@@ -54,7 +63,7 @@ public class HillClimber {
 	}
 
 	public static void main(String args[]) {
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < 100000; i++)
 			new HillClimber();
 		System.out.println(correct);
 	}
