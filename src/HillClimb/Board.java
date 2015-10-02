@@ -1,16 +1,9 @@
 package HillClimb;
 
 /**
- * OKAY it's time for bed. But you think you have a realization on why your code isn't working.
- * The only answer is in A: how you're calculation the heuristic B: the definition of hill climbing
- * The way this algorithm currently works is wrong. It simply only checks the neighbors. This is not what we want to do.
- * We want to calculate the heuristic for the whole board and move THE BEST POSSIBLE QUEEN TO THE BEST POSSILBLE POSITION
- * Check this out: https://courses.cs.washington.edu/courses/csep573/11wi/lectures/04-lsearch.pdf
- * In the diagram, we should move a queen to a 12 spot, NO MATTER WHAT. 
- * First choice is easiest, so we would move the first queen with a 12 in the column to it.
- * So in the diagram, the queen in the second column.
- * Work on this today
- * @author Kyle
+ * Board setup for the 8 queens problem, with collision calculations
+ * 
+ * @author Kyle Richardson
  *
  */
 
