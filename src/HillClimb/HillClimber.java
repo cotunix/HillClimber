@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class HillClimber {
 
 	Board board;
-	boolean climbing;
+	private int repeat;
 	public static int correct;
 	
 	Random r = new Random();
@@ -30,13 +30,14 @@ public class HillClimber {
 	 * Runs the HillClimber algorithm.
 	 */
 	public HillClimber() {
+		repeat = 0;
 		board = new Board();
 		board.calculateSquareCollisions();
 		time = System.currentTimeMillis();
 		while (board.totalCollisions() != 0) {
 			for (int i = 0; i < 8; i++) {
 				climbHelper(i);
-					board.calculateSquareCollisions();				
+				board.calculateSquareCollisions();				
 				
 			}
 			// If it takes more than 50 milliseconds(arbitrarily decided), it's likely there isn't a
@@ -53,9 +54,9 @@ public class HillClimber {
 	/**
 	 * Moves a queen to a position that is AT LEAST as good as it's current position.
 	 * @param column column of the queen to move
-	 * @return boolean representing if the queen is moved
+	 * 
 	 */
-	private boolean climbHelper(int column) {
+	private void climbHelper(int column) {
 		int occ = -1;
 		boolean ret = false;
 		ArrayList<Integer> better = new ArrayList<Integer>();
@@ -79,7 +80,7 @@ public class HillClimber {
 			int m = r.nextInt(better.size());
 			switchQueen(column, occ, better.get(m));
 		}
-		return ret;
+		
 	}
 
 	/**
