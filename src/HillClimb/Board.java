@@ -47,7 +47,9 @@ public class Board {
 
 		}
 	}
-	
+	/**
+	 * resets all collisions within the board to 0
+	 */
 	private void resetCollisions(){
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
@@ -55,11 +57,15 @@ public class Board {
 			}
 		}
 	}
-	
+	/**
+	 * calculates the total number of collisions with queens on the board
+	 * @return total number of collisions
+	 */
 	public int totalCollisions(){
 		int c = 0;
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
+				// adds the collisions to c if there is a queen on this square
 				c += board[i][j].isOccupied() ? board[i][j].getCollisions() : 0;
 			}
 		}
@@ -100,7 +106,7 @@ public class Board {
 			j++;
 		}
 		
-		
+		// this way : / up
 		j = column + 1;
 		for (int i = row - 1; i > -1; i--) {
 
@@ -109,7 +115,8 @@ public class Board {
 
 			j++;
 		}
-
+		
+		// this way : \ up
 		j = column - 1;
 		for (int i = row + 1; i < 8; i++) {
 			
@@ -118,7 +125,7 @@ public class Board {
 				
 			j--;
 		}
-		
+		// this way : / down
 		j = column - 1;
 		for (int i = row - 1; i > -1; i--) {
 			
@@ -129,6 +136,9 @@ public class Board {
 
 	}
 
+	/**
+	 * Converts the board into a text version with the number of collisions on a space and a "Q" if a queen resides on the space
+	 */
 	@Override
 	public String toString() {
 		String r = "";
@@ -144,8 +154,7 @@ public class Board {
 	
 	
 
-	public static void main(String args[]) {
-		
+	public static void main(String args[]) {		
 		Board m = new Board();
 		m.calculateSquareCollisions();
 		System.out.print(m);
